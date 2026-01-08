@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>R Beauty - Premium Skincare</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Georgia", serif;
+        background: #0a0a0a;
+        color: #f5f1ea;
+        overflow-x: hidden;
+      }
+
+      header {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        padding: 30px 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: linear-gradient(
+          180deg,
+          rgba(10, 10, 10, 0.95) 0%,
+          rgba(10, 10, 10, 0) 100%
+        );
+        backdrop-filter: blur(10px);
+      }
+
+      .logo {
+        font-size: 36px;
+        font-weight: 300;
+        letter-spacing: 8px;
+        color: #d4af37;
+        text-transform: uppercase;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 50px;
+        list-style: none;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: #f5f1ea;
+        font-size: 14px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-family: "Arial", sans-serif;
+        position: relative;
+        transition: all 0.3s ease;
+      }
+
+      .nav-links a::before {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 1px;
+        background: #d4af37;
+        transition: width 0.3s ease;
+      }
+
+      .nav-links a:hover::before {
+        width: 100%;
+      }
+
+      .nav-links a:hover {
+        color: #d4af37;
+      }
+
+      .hero {
+        height: 100vh;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        opacity: 0;
+        animation: fadeIn 1.5s ease forwards;
+      }
+
+      .hero-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle at 30% 50%,
+          rgba(212, 175, 55, 0.15) 0%,
+          rgba(10, 10, 10, 1) 70%
+        );
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        max-width: 900px;
+        padding: 0 40px;
+      }
+
+      .hero-subtitle {
+        font-size: 14px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: #d4af37;
+        margin-bottom: 30px;
+        font-family: "Arial", sans-serif;
+        animation: fadeIn 1s ease;
+      }
+
+      .hero-title {
+        font-size: 96px;
+        font-weight: 300;
+        line-height: 1.1;
+        margin-bottom: 40px;
+        letter-spacing: 4px;
+        animation: fadeInUp 1s ease 0.3s backwards;
+      }
+
+      .hero-description {
+        font-size: 18px;
+        line-height: 1.8;
+        color: #c4baa8;
+        margin-bottom: 50px;
+        font-style: italic;
+        animation: fadeInUp 1s ease 0.6s backwards;
+      }
+
+      .cta-button {
+        display: inline-block;
+        padding: 20px 60px;
+        background: transparent;
+        color: #d4af37;
+        border: 2px solid #d4af37;
+        text-decoration: none;
+        font-size: 12px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        font-family: "Arial", sans-serif;
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+        animation: fadeInUp 1s ease 0.9s backwards;
+      }
+
+      .cta-button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: #d4af37;
+        transition: left 0.4s ease;
+        z-index: -1;
+      }
+
+      .cta-button:hover::before {
+        left: 0;
+      }
+
+      .cta-button:hover {
+        color: #0a0a0a;
+      }
+
+      .decorative-lines {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+      }
+
+      .line {
+        position: absolute;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          #d4af37 50%,
+          transparent 100%
+        );
+        height: 1px;
+        width: 100%;
+        opacity: 0.2;
+      }
+
+      .line1 {
+        top: 15%;
+        animation: slideRight 15s linear infinite;
+      }
+      .line2 {
+        top: 85%;
+        animation: slideLeft 20s linear infinite;
+      }
+
+      @keyframes slideRight {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(100%);
+        }
+      }
+
+      @keyframes slideLeft {
+        0% {
+          transform: translateX(100%);
+        }
+        100% {
+          transform: translateX(-100%);
+        }
+      }
+
+      .featured-section {
+        padding: 150px 60px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        max-width: 1600px;
+        margin: 0 auto;
+        position: relative;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 1s ease, transform 1s ease;
+      }
+
+      .featured-section.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .featured-image {
+        position: relative;
+        height: 700px;
+        overflow: hidden;
+        background: linear-gradient(135deg, #1a1410 0%, #2a2218 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(212, 175, 55, 0.2);
+        transform: translateX(-100px);
+        opacity: 0;
+        transition: transform 1.2s ease, opacity 1.2s ease;
+      }
+
+      .featured-section.visible .featured-image {
+        transform: translateX(0);
+        opacity: 1;
+      }
+
+      .featured-image::before {
+        content: "✦";
+        font-size: 200px;
+        color: rgba(212, 175, 55, 0.15);
+        position: absolute;
+      }
+
+      .image-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle at center,
+          transparent 30%,
+          rgba(10, 10, 10, 0.8) 100%
+        );
+        transition: all 0.6s ease;
+      }
+
+      .featured-image:hover .image-overlay {
+        background: radial-gradient(
+          circle at center,
+          transparent 40%,
+          rgba(10, 10, 10, 0.6) 100%
+        );
+      }
+
+      .featured-content {
+        padding: 80px 100px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: linear-gradient(
+          135deg,
+          rgba(26, 20, 16, 0.5) 0%,
+          rgba(10, 10, 10, 0.8) 100%
+        );
+        border: 1px solid rgba(212, 175, 55, 0.2);
+        border-left: none;
+        transform: translateX(100px);
+        opacity: 0;
+        transition: transform 1.2s ease 0.2s, opacity 1.2s ease 0.2s;
+      }
+
+      .featured-section.visible .featured-content {
+        transform: translateX(0);
+        opacity: 1;
+      }
+
+      .featured-label {
+        font-size: 11px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: #d4af37;
+        margin-bottom: 30px;
+        font-family: "Arial", sans-serif;
+      }
+
+      .featured-title {
+        font-size: 56px;
+        font-weight: 300;
+        line-height: 1.2;
+        margin-bottom: 30px;
+        letter-spacing: 2px;
+      }
+
+      .featured-description {
+        font-size: 16px;
+        line-height: 1.9;
+        color: #c4baa8;
+        margin-bottom: 40px;
+      }
+
+      .featured-price {
+        font-size: 32px;
+        color: #d4af37;
+        margin-bottom: 40px;
+        font-weight: 300;
+        letter-spacing: 2px;
+      }
+
+      .products-showcase {
+        padding: 100px 60px;
+        max-width: 1800px;
+        margin: 0 auto;
+      }
+
+      .showcase-header {
+        text-align: center;
+        margin-bottom: 100px;
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 1s ease, transform 1s ease;
+      }
+
+      .showcase-header.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .showcase-title {
+        font-size: 72px;
+        font-weight: 300;
+        letter-spacing: 4px;
+        margin-bottom: 20px;
+      }
+
+      .showcase-subtitle {
+        font-size: 14px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: #d4af37;
+        font-family: "Arial", sans-serif;
+      }
+
+      .products-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        background: rgba(212, 175, 55, 0.15);
+        padding: 0;
+      }
+
+      .product-card {
+        background: #0a0a0a;
+        padding: 60px 40px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.5s ease;
+        border: 1px solid transparent;
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      .product-card.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .product-card::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle,
+          rgba(212, 175, 55, 0.1) 0%,
+          transparent 70%
+        );
+        transition: transform 0.6s ease;
+        z-index: 1;
+      }
+
+      .product-card:hover::before {
+        transform: translate(-50%, -50%) scale(1.5);
+      }
+
+      .product-card:hover {
+        border-color: rgba(212, 175, 55, 0.5);
+        transform: translateY(-10px);
+      }
+
+      .product-icon {
+        font-size: 72px;
+        margin-bottom: 30px;
+        filter: grayscale(100%) brightness(1.2);
+        transition: all 0.5s ease;
+        position: relative;
+        z-index: 2;
+      }
+
+      .product-card:hover .product-icon {
+        filter: grayscale(0%) brightness(1);
+        transform: scale(1.1);
+      }
+
+      .product-number {
+        font-size: 11px;
+        letter-spacing: 2px;
+        color: #d4af37;
+        margin-bottom: 20px;
+        font-family: "Arial", sans-serif;
+        position: relative;
+        z-index: 2;
+      }
+
+      .product-name {
+        font-size: 28px;
+        font-weight: 300;
+        margin-bottom: 15px;
+        letter-spacing: 1px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .product-desc {
+        font-size: 14px;
+        color: #c4baa8;
+        line-height: 1.6;
+        margin-bottom: 25px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .product-price {
+        font-size: 24px;
+        color: #d4af37;
+        font-weight: 300;
+        letter-spacing: 1px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .parallax-section {
+        height: 80vh;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #0a0a0a;
+        border-top: 1px solid rgba(212, 175, 55, 0.2);
+        border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        overflow: hidden;
+        opacity: 0;
+        transform: scale(0.95);
+        transition: opacity 1.2s ease, transform 1.2s ease;
+      }
+
+      .parallax-section::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle at center,
+          transparent 0%,
+          transparent 20%,
+          rgba(212, 175, 55, 0.03) 40%,
+          transparent 60%
+        );
+        animation: rotateGradient 20s linear infinite;
+      }
+
+      .parallax-section::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            45deg,
+            transparent 48%,
+            rgba(212, 175, 55, 0.05) 49%,
+            rgba(212, 175, 55, 0.05) 51%,
+            transparent 52%
+          ),
+          linear-gradient(
+            -45deg,
+            transparent 48%,
+            rgba(212, 175, 55, 0.05) 49%,
+            rgba(212, 175, 55, 0.05) 51%,
+            transparent 52%
+          );
+        background-size: 80px 80px;
+        opacity: 0.3;
+      }
+
+      @keyframes rotateGradient {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .parallax-section.visible {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .parallax-content {
+        text-align: center;
+        z-index: 2;
+        max-width: 800px;
+        padding: 0 40px;
+        position: relative;
+      }
+
+      .parallax-content::before,
+      .parallax-content::after {
+        content: "✦";
+        position: absolute;
+        font-size: 24px;
+        color: rgba(212, 175, 55, 0.4);
+        animation: sparkle 3s ease-in-out infinite;
+      }
+
+      .parallax-content::before {
+        top: -40px;
+        left: 20%;
+        animation-delay: 0s;
+      }
+
+      .parallax-content::after {
+        bottom: -40px;
+        right: 20%;
+        animation-delay: 1.5s;
+      }
+
+      @keyframes sparkle {
+        0%,
+        100% {
+          opacity: 0.2;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.3);
+        }
+      }
+
+      .parallax-text {
+        font-size: 48px;
+        font-weight: 300;
+        line-height: 1.5;
+        font-style: italic;
+        color: #d4af37;
+        letter-spacing: 2px;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 1s ease 0.3s, transform 1s ease 0.3s;
+      }
+
+      .parallax-section.visible .parallax-text {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      footer {
+        padding: 80px 60px;
+        text-align: center;
+        border-top: 1px solid rgba(212, 175, 55, 0.2);
+        background: #0a0a0a;
+      }
+
+      .footer-logo {
+        font-size: 32px;
+        letter-spacing: 8px;
+        color: #d4af37;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+      }
+
+      .footer-text {
+        font-size: 13px;
+        color: #c4baa8;
+        letter-spacing: 2px;
+        line-height: 2;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 1024px) {
+        .hero-title {
+          font-size: 64px;
+        }
+        .featured-section {
+          grid-template-columns: 1fr;
+        }
+        .featured-content {
+          border-left: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .products-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        header {
+          padding: 20px;
+        }
+        .logo {
+          font-size: 24px;
+          letter-spacing: 4px;
+        }
+        .nav-links {
+          gap: 25px;
+        }
+        .nav-links a {
+          font-size: 11px;
+        }
+        .hero-title {
+          font-size: 48px;
+        }
+        .products-grid {
+          grid-template-columns: 1fr;
+        }
+        .featured-content {
+          padding: 40px;
+        }
+        .featured-title {
+          font-size: 42px;
+        }
+        .showcase-title {
+          font-size: 48px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">R Beauty</div>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#featured">Featured</a></li>
+        <li><a href="#collection">Collection</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </header>
+
+    <section class="hero" id="home">
+      <div class="hero-background"></div>
+      <div class="decorative-lines">
+        <div class="line line1"></div>
+        <div class="line line2"></div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-subtitle">Est. 2026</div>
+        <h1 class="hero-title">Timeless Elegance</h1>
+        <p class="hero-description">
+          Where luxury meets science. A curated collection of premium skincare,
+          crafted with meticulous precision to enhance your natural radiance.
+        </p>
+        <a href="#featured" class="cta-button">Discover More</a>
+      </div>
+    </section>
+
+    <section class="featured-section" id="featured">
+      <div class="featured-image">
+        <div class="image-overlay"></div>
+      </div>
+      <div class="featured-content">
+        <div class="featured-label">Featured Product</div>
+        <h2 class="featured-title">Rose Gold Elixir</h2>
+        <p class="featured-description">
+          An exquisite fusion of 24K gold essence and rare Bulgarian rose oil.
+          This luxurious serum penetrates deeply to rejuvenate, illuminate, and
+          transform your complexion with unparalleled radiance.
+        </p>
+        <div class="featured-price">$128</div>
+        <a href="#" class="cta-button">Add to Collection</a>
+      </div>
+    </section>
+
+    <section class="parallax-section">
+      <div class="parallax-content">
+        <p class="parallax-text">
+          "Beauty is the promise of happiness refined through elegance."
+        </p>
+      </div>
+    </section>
+
+    <section class="products-showcase" id="collection">
+      <div class="showcase-header">
+        <h2 class="showcase-title">The Collection</h2>
+        <p class="showcase-subtitle">Curated Essentials</p>
+      </div>
+      <div class="products-grid">
+        <div class="product-card">
+          <div class="product-number">01</div>
+          <div class="product-icon">💧</div>
+          <h3 class="product-name">Hydrating Serum</h3>
+          <p class="product-desc">Deep moisture infusion for luminous skin</p>
+          <div class="product-price">$48</div>
+        </div>
+        <div class="product-card">
+          <div class="product-number">02</div>
+          <div class="product-icon">🌸</div>
+          <h3 class="product-name">Rose Face Cream</h3>
+          <p class="product-desc">
+            Luxurious rose essence with 24-hour hydration
+          </p>
+          <div class="product-price">$62</div>
+        </div>
+        <div class="product-card">
+          <div class="product-number">03</div>
+          <div class="product-icon">✨</div>
+          <h3 class="product-name">Brightening Mask</h3>
+          <p class="product-desc">Instant radiance and complexion refinement</p>
+          <div class="product-price">$38</div>
+        </div>
+        <div class="product-card">
+          <div class="product-number">04</div>
+          <div class="product-icon">🌿</div>
+          <h3 class="product-name">Herbal Cleanser</h3>
+          <p class="product-desc">Botanical purification with gentle care</p>
+          <div class="product-price">$34</div>
+        </div>
+        <div class="product-card">
+          <div class="product-number">05</div>
+          <div class="product-icon">🍃</div>
+          <h3 class="product-name">Eye Renewal Cream</h3>
+          <p class="product-desc">Targeted treatment for delicate eye area</p>
+          <div class="product-price">$56</div>
+        </div>
+        <div class="product-card">
+          <div class="product-number">06</div>
+          <div class="product-icon">💎</div>
+          <h3 class="product-name">Luxury Night Oil</h3>
+          <p class="product-desc">
+            Overnight rejuvenation with rare botanicals
+          </p>
+          <div class="product-price">$72</div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-logo">R Beauty</div>
+      <p class="footer-text">
+        © 2026 R Beauty. All Rights Reserved.<br />Refined Skincare for the
+        Discerning Individual
+      </p>
+    </footer>
+
+    <script src="beauty.js" defer></script>
+  </body>
+</html>
